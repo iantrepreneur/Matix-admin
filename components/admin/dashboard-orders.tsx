@@ -106,56 +106,56 @@ export function DashboardOrders() {
           <Table>
             <TableHeader>
               <TableRow className="border-gray-100 bg-gray-50">
-                <TableHead className="font-bold text-gray-900 text-sm uppercase">N° FACTURE</TableHead>
-                <TableHead className="font-bold text-gray-900 text-sm uppercase">DATE COMMANDE</TableHead>
-                <TableHead className="font-bold text-gray-900 text-sm uppercase">CLIENT</TableHead>
-                <TableHead className="font-bold text-gray-900 text-sm uppercase">MÉTHODE</TableHead>
-                <TableHead className="font-bold text-gray-900 text-sm uppercase">MONTANT</TableHead>
-                <TableHead className="font-bold text-gray-900 text-sm uppercase">STATUS</TableHead>
-                <TableHead className="font-bold text-gray-900 text-sm uppercase">ACTION</TableHead>
-                <TableHead className="font-bold text-gray-900 text-sm uppercase">FACTURE</TableHead>
+                <TableHead className="font-bold text-gray-900 text-xs uppercase">N° FACTURE</TableHead>
+                <TableHead className="font-bold text-gray-900 text-xs uppercase">DATE COMMANDE</TableHead>
+                <TableHead className="font-bold text-gray-900 text-xs uppercase">CLIENT</TableHead>
+                <TableHead className="font-bold text-gray-900 text-xs uppercase">MÉTHODE</TableHead>
+                <TableHead className="font-bold text-gray-900 text-xs uppercase">MONTANT</TableHead>
+                <TableHead className="font-bold text-gray-900 text-xs uppercase">STATUS</TableHead>
+                <TableHead className="font-bold text-gray-900 text-xs uppercase">ACTION</TableHead>
+                <TableHead className="font-bold text-gray-900 text-xs uppercase">FACTURE</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {orders.map((order, index) => (
                 <TableRow key={index} className="border-gray-100 hover:bg-gray-50">
-                  <TableCell className="font-bold text-gray-900 text-sm">{order.invoiceNo}</TableCell>
+                  <TableCell className="font-bold text-gray-900 text-xs">{order.invoiceNo}</TableCell>
                   <TableCell>
-                    <div className="text-xs text-gray-900">{order.orderTime}</div>
+                    <div className="text-xs text-gray-900 whitespace-nowrap">{order.orderTime}</div>
                   </TableCell>
-                  <TableCell className="font-medium text-gray-900 text-sm">{order.customerName}</TableCell>
+                  <TableCell className="font-medium text-gray-900 text-xs">{order.customerName}</TableCell>
                   <TableCell>
-                    <span className="text-gray-900 font-bold text-sm">{order.method}</span>
+                    <span className="text-gray-900 font-bold text-xs whitespace-nowrap">{order.method}</span>
                   </TableCell>
-                  <TableCell className="font-bold text-gray-900 text-sm">{order.amount}</TableCell>
+                  <TableCell className="font-bold text-gray-900 text-xs whitespace-nowrap">{order.amount}</TableCell>
                   <TableCell>
-                    <Badge className={`${order.statusColor} text-white hover:${order.statusColor} font-medium px-2 py-1 rounded-full text-xs`}>
+                    <Badge className={`${order.statusColor} text-white hover:${order.statusColor} font-medium px-1.5 py-0.5 rounded-full text-xs`}>
                       {order.status}
                     </Badge>
                   </TableCell>
                   <TableCell>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="outline" size="sm" className="h-8 px-3 text-sm font-medium">
+                        <Button variant="outline" size="sm" className="h-7 px-2 text-xs font-medium">
                           <span>{order.status}</span>
-                          <ChevronDown className="h-3 w-3 ml-1" />
+                          <ChevronDown className="h-3 w-3 ml-0.5" />
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <DropdownMenuItem className="font-medium">En Cours</DropdownMenuItem>
-                        <DropdownMenuItem className="font-medium">En Attente</DropdownMenuItem>
-                        <DropdownMenuItem className="font-medium">Livrée</DropdownMenuItem>
-                        <DropdownMenuItem className="font-medium">Annulée</DropdownMenuItem>
+                        <DropdownMenuItem className="font-medium text-xs">En Cours</DropdownMenuItem>
+                        <DropdownMenuItem className="font-medium text-xs">En Attente</DropdownMenuItem>
+                        <DropdownMenuItem className="font-medium text-xs">Livrée</DropdownMenuItem>
+                        <DropdownMenuItem className="font-medium text-xs">Annulée</DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </TableCell>
                   <TableCell>
                     <div className="flex items-center space-x-2">
-                      <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-gray-100">
+                      <Button variant="ghost" size="icon" className="h-7 w-7 hover:bg-gray-100">
                         <Print className="h-4 w-4 text-gray-600" />
                       </Button>
                       <Link href={`/admin/invoice/${order.invoiceNo.replace('AV', '')}`}>
-                        <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-gray-100">
+                        <Button variant="ghost" size="icon" className="h-7 w-7 hover:bg-gray-100">
                           <Search className="h-4 w-4 text-gray-600" />
                         </Button>
                       </Link>
