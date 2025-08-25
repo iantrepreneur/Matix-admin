@@ -43,19 +43,19 @@ const stats = [
 
 export function DashboardStats() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mb-8">
+    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-4 mb-8">
       {stats.map((stat, index) => {
         const IconComponent = stat.icon;
         return (
           <Card key={index} className={`${stat.color} text-white border-0 overflow-hidden`}>
-            <CardContent className="p-6">
+            <CardContent className="p-4">
               <div className="flex items-center justify-between mb-4">
-                <div className="p-3 bg-white/20 rounded-lg">
-                  <IconComponent className="h-6 w-6 text-white" />
+                <div className="p-2 bg-white/20 rounded-lg">
+                  <IconComponent className="h-5 w-5 text-white" />
                 </div>
               </div>
               <div className="space-y-2">
-                <h3 className="text-sm font-medium text-white/90">{stat.title}</h3>
+                  <p className="text-lg font-bold text-white">{stat.value}</p>
                 <p className="text-2xl font-bold text-white">{stat.value}</p>
                 {stat.details && (
                   <p className="text-xs text-white/80">{stat.details}</p>
