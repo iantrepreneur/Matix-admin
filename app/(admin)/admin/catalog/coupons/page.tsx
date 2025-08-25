@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Table,
   TableBody,
@@ -15,6 +16,12 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
   Search,
   Download,
   Upload,
@@ -23,6 +30,7 @@ import {
   Edit,
   ChevronLeft,
   ChevronRight,
+  X,
 } from "lucide-react";
 
 // Données mockées avicoles
@@ -152,6 +160,8 @@ const coupons = [
 export default function CouponsPage() {
   const [selectedCoupons, setSelectedCoupons] = useState<number[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [selectedCoupon, setSelectedCoupon] = useState<any>(null);
 
   const handleSelectAll = (checked: boolean) => {
     if (checked) {
@@ -167,6 +177,11 @@ export default function CouponsPage() {
     } else {
       setSelectedCoupons(selectedCoupons.filter(id => id !== couponId));
     }
+  };
+
+  const handleEditCoupon = (coupon: any) => {
+    setSelectedCoupon(coupon);
+    setShowUpdateModal(true);
   };
 
   return (
@@ -284,7 +299,12 @@ export default function CouponsPage() {
                 </TableCell>
                 <TableCell>
                   <div className="flex items-center space-x-2">
-                    <Button variant="ghost" size="icon" className="h-6 w-6">
+                    <Button 
+                      variant="ghost" 
+                      size="icon" 
+                      className="h-6 w-6"
+                      onClick={() => handleEditCoupon(coupon)}
+                    >
                       <Edit className="h-4 w-4 text-gray-500" />
                     </Button>
                     <Button variant="ghost" size="icon" className="h-6 w-6">
@@ -318,6 +338,180 @@ export default function CouponsPage() {
           </Button>
         </div>
       </div>
+
+      {/* Update Coupon Modal */}
+      <Dialog open={showUpdateModal} onOpenChange={setShowUpdateModal}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader className="flex flex-row items-center justify-between">
+            <div>
+              <DialogTitle className="text-xl font-semibold">Update Coupon</DialogTitle>
+              <p className="text-sm text-gray-600 mt-1">Updated your coupon and necessary information from here</p>
+            </div>
+            <div className="flex items-center space-x-2">
+              <select className="border rounded px-2 py-1 text-sm">
+                <option>en</option>
+              </select>
+              <Button 
+                variant="ghost" 
+                size="icon"
+                onClick={() => setShowUpdateModal(false)}
+                className="text-gray-500"
+              >
+                <X className="h-5 w-5" />
+              </Button>
+            </div>
+          </DialogHeader>
+          
+          <div className="space-y-6 mt-6">
+            {/* Coupon Banner Image */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Coupon Banner Image
+              </label>
+              <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center mb-4">
+                <div className="text-emerald-500 mb-2">
+                  <svg className="w-8 h-8 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                  </svg>
+                </div>
+                <p className="text-gray-600 font-medium">Drag your images here</p>
+                <p className="text-gray-400 text-sm">(Only *.jpeg, *.webp and *.png images will be accepted)</p>
+              </div>
+              
+              {/* Current Image Preview */}
+              <div className="relative inline-block">
+                <img 
+                  src="https://images.pexels.com/photos/1300355/pexels-photo-1300355.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=2" 
+                  alt="Coupon" 
+                  className="w-20 h-20 object-cover rounded-lg"
+                />
+                <button className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-xs">
+                  ×
+                </button>
+              </div>
+            </div>
+
+            {/* Form Fields */}
+            <div className="grid grid-cols-1 gap-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Campaign Name
+                </label>
+                <Input 
+                  defaultValue="August Gift Voucher"
+                  className="w-full"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Campaign Code
+                </label>
+                <Input 
+                  defaultValue="AUGUST25"
+                  className="w-full"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Coupon Validity Time
+                </label>
+                <Input 
+                  type="datetime-local"
+                  defaultValue="2025-10-31T16:30"
+                  className="w-full"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Discount Type
+                </label>
+                <div className="flex items-center space-x-4">
+                  <Button 
+                    size="sm" 
+                    className="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-full"
+                  >
+                    Percentage
+                  </Button>
+                  <Button 
+                    size="sm" 
+                    variant="outline"
+                    className="px-4 py-2 rounded-full"
+                  >
+                    Fixed
+                  </Button>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  DISCOUNT
+                </label>
+                <div className="relative">
+                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">%</span>
+                  <Input 
+                    defaultValue="50"
+                    className="pl-8"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Minimum Amount
+                </label>
+                <div className="relative">
+                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
+                  <Input 
+                    defaultValue="2000"
+                    className="pl-8"
+                  />
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between">
+                <label className="text-sm font-medium text-gray-700">
+                  Published
+                </label>
+                <div className="flex items-center space-x-2">
+                  <Button 
+                    size="sm" 
+                    className="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-1 rounded-full text-xs"
+                  >
+                    Yes
+                  </Button>
+                  <Button 
+                    size="sm" 
+                    variant="outline"
+                    className="px-4 py-1 rounded-full text-xs"
+                  >
+                    No
+                  </Button>
+                </div>
+              </div>
+            </div>
+
+            {/* Footer Buttons */}
+            <div className="flex justify-between pt-6 border-t">
+              <Button 
+                variant="outline"
+                onClick={() => setShowUpdateModal(false)}
+                className="px-8"
+              >
+                Cancel
+              </Button>
+              <Button 
+                className="bg-emerald-500 hover:bg-emerald-600 text-white px-8"
+                onClick={() => setShowUpdateModal(false)}
+              >
+                Update Coupon
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
