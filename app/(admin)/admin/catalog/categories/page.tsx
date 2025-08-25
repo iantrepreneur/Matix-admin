@@ -321,6 +321,12 @@ export default function CategoriesPage() {
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Name
+                </label>
+                <Input 
+                  defaultValue="Fish & Meat"
+                  className="w-full"
+                />
+              </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Description
@@ -330,7 +336,6 @@ export default function CategoriesPage() {
                   className="w-full h-24 resize-none"
                 />
               </div>
-                </label>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Parent Category
@@ -346,7 +351,6 @@ export default function CategoriesPage() {
                   <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs">🏠 Home</span>
                 </div>
               </div>
-                <Input 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Category Image
@@ -373,7 +377,6 @@ export default function CategoriesPage() {
                   </button>
                 </div>
               </div>
-                  defaultValue="Fish & Meat"
               <div className="flex items-center justify-between">
                 <label className="text-sm font-medium text-gray-700">
                   Published
@@ -395,7 +398,6 @@ export default function CategoriesPage() {
                 </div>
               </div>
             </div>
-                  className="w-full"
             {/* Footer Buttons */}
             <div className="flex justify-between pt-6 border-t">
               <Button 
@@ -415,7 +417,7 @@ export default function CategoriesPage() {
           </div>
         </DialogContent>
       </Dialog>
-                />
+
       {/* View Category Modal */}
       <Dialog open={showViewModal} onOpenChange={setShowViewModal}>
         <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto">
@@ -443,7 +445,6 @@ export default function CategoriesPage() {
                 </Button>
               </div>
             </div>
-              </div>
             {/* Sub-categories Table */}
             <div className="bg-white rounded-lg border">
               <Table>
