@@ -38,6 +38,7 @@ import {
   ChevronDown,
   ChevronLeft,
   ChevronRight,
+  X,
 } from "lucide-react";
 
 // Données mockées avicoles
@@ -159,6 +160,7 @@ export default function ProductsPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedPrice, setSelectedPrice] = useState("");
+  const [showAddProduct, setShowAddProduct] = useState(false);
 
   const handleSelectAll = (checked: boolean) => {
     if (checked) {
@@ -179,6 +181,175 @@ export default function ProductsPage() {
   const formatPrice = (price: number) => {
     return `${price.toLocaleString()} FCFA`;
   };
+
+  if (showAddProduct) {
+    return (
+      <div className="space-y-6">
+        {/* Header */}
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">Add Product</h1>
+            <p className="text-sm text-gray-600 mt-1">Add your product and necessary information from here</p>
+          </div>
+          <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-2">
+              <span className="text-sm text-gray-600">Does this product have variants?</span>
+              <div className="flex items-center space-x-2">
+                <Button size="sm" variant="outline" className="text-red-500 border-red-500">
+                  No
+                </Button>
+              </div>
+            </div>
+            <Button 
+              variant="ghost" 
+              size="icon"
+              onClick={() => setShowAddProduct(false)}
+              className="text-gray-500"
+            >
+              <X className="h-5 w-5" />
+            </Button>
+          </div>
+        </div>
+
+        {/* Form */}
+        <div className="bg-white rounded-lg border p-6">
+          <div className="mb-6">
+            <h3 className="text-lg font-medium text-emerald-600 mb-4">Basic Info</h3>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Left Column */}
+            <div className="space-y-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Product Title/Name
+                </label>
+                <Input placeholder="Product Title/Name" />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Product Description
+                </label>
+                <textarea 
+                  className="w-full h-32 p-3 border border-gray-300 rounded-md resize-none"
+                  placeholder="Product Description"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Product Images
+                </label>
+                <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+                  <div className="text-emerald-500 mb-2">
+                    <svg className="w-8 h-8 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                    </svg>
+                  </div>
+                  <p className="text-gray-600 font-medium">Drag your images here</p>
+                  <p className="text-gray-400 text-sm">(Only *.jpeg, *.webp and *.png images will be accepted)</p>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Product SKU
+                </label>
+                <Input placeholder="Product SKU" />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Product Barcode
+                </label>
+                <Input placeholder="Product Barcode" />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Category
+                </label>
+                <Select>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select Category" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="poulets">🏠 Poulets & Poussins</SelectItem>
+                    <SelectItem value="materiel">Matériel Avicole</SelectItem>
+                    <SelectItem value="vaccins">Vaccins & Soins</SelectItem>
+                    <SelectItem value="aliments">Aliments</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Default Category
+                </label>
+                <Select>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Default Category" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="default">Default Category</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Product Price
+                </label>
+                <div className="relative">
+                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">FCFA</span>
+                  <Input placeholder="0" className="pl-16" />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Sale Price
+                </label>
+                <div className="relative">
+                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">FCFA</span>
+                  <Input placeholder="0" className="pl-16" />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Product Quantity
+                </label>
+                <Input placeholder="0" type="number" />
+              </div>
+            </div>
+
+            {/* Right Column - Preview */}
+            <div className="bg-gray-50 rounded-lg p-6">
+              <h4 className="text-lg font-medium text-gray-900 mb-4">Preview</h4>
+              <div className="text-gray-500 text-center py-8">
+                Product preview will appear here
+              </div>
+            </div>
+          </div>
+
+          {/* Footer Buttons */}
+          <div className="flex justify-end space-x-4 mt-8 pt-6 border-t">
+            <Button 
+              variant="outline" 
+              onClick={() => setShowAddProduct(false)}
+            >
+              Cancel
+            </Button>
+            <Button className="bg-emerald-500 hover:bg-emerald-600 text-white">
+              Add Product
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -201,7 +372,11 @@ export default function ProductsPage() {
             <Trash2 className="h-4 w-4 mr-2" />
             Delete
           </Button>
-          <Button size="sm" className="bg-emerald-500 hover:bg-emerald-600 text-white">
+          <Button 
+            size="sm" 
+            className="bg-emerald-500 hover:bg-emerald-600 text-white"
+            onClick={() => setShowAddProduct(true)}
+          >
             <Plus className="h-4 w-4 mr-2" />
             Add Product
           </Button>
@@ -292,21 +467,21 @@ export default function ProductsPage() {
                     <img
                       src={product.image}
                       alt={product.name}
-                      className="w-10 h-10 rounded-lg object-cover"
+                      className="w-8 h-8 rounded object-cover flex-shrink-0"
                     />
-                    <span className="font-medium text-gray-900">{product.name}</span>
+                    <span className="font-medium text-gray-900 text-xs whitespace-nowrap">{product.name}</span>
                   </div>
                 </TableCell>
-                <TableCell className="text-gray-600">{product.category}</TableCell>
+                <TableCell className="text-gray-600 text-xs whitespace-nowrap">{product.category}</TableCell>
                 <TableCell className="font-medium text-gray-900">
-                  {formatPrice(product.price)}
+                  <span className="text-xs whitespace-nowrap">{formatPrice(product.price)}</span>
                 </TableCell>
                 <TableCell className="font-medium text-gray-900">
-                  {formatPrice(product.salePrice)}
+                  <span className="text-xs whitespace-nowrap">{formatPrice(product.salePrice)}</span>
                 </TableCell>
-                <TableCell className="text-gray-900">{product.stock}</TableCell>
+                <TableCell className="text-gray-900 text-xs">{product.stock}</TableCell>
                 <TableCell>
-                  <Badge className="bg-emerald-500 text-white hover:bg-emerald-500">
+                  <Badge className="bg-emerald-500 text-white hover:bg-emerald-500 text-xs whitespace-nowrap">
                     {product.status}
                   </Badge>
                 </TableCell>
