@@ -35,7 +35,7 @@ const menuItems = [
     icon: FileText,
   },
   {
-    title: "Catalogue",
+    title: "Produits",
     href: "/admin/catalog",
     icon: Store,
     submenu: [

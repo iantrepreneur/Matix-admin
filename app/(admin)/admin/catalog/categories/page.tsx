@@ -136,24 +136,24 @@ export default function CategoriesPage() {
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-gray-900">Category</h1>
+        <h1 className="text-xl font-bold text-gray-900">Category</h1>
         <div className="flex items-center space-x-3">
-          <Button variant="outline" size="sm" className="text-gray-600">
+          <Button variant="outline" size="sm" className="text-gray-600 h-8 px-3 text-xs">
             <Download className="h-4 w-4 mr-2" />
             Export
           </Button>
-          <Button variant="outline" size="sm" className="text-gray-600">
+          <Button variant="outline" size="sm" className="text-gray-600 h-8 px-3 text-xs">
             <Upload className="h-4 w-4 mr-2" />
             Import
           </Button>
-          <Button size="sm" className="bg-orange-500 hover:bg-orange-600 text-white">
+          <Button size="sm" className="bg-orange-500 hover:bg-orange-600 text-white h-8 px-3 text-xs">
             Bulk Action
           </Button>
-          <Button size="sm" className="bg-pink-500 hover:bg-pink-600 text-white">
+          <Button size="sm" className="bg-pink-500 hover:bg-pink-600 text-white h-8 px-3 text-xs">
             <Trash2 className="h-4 w-4 mr-2" />
             Delete
           </Button>
-          <Button size="sm" className="bg-emerald-500 hover:bg-emerald-600 text-white">
+          <Button size="sm" className="bg-emerald-500 hover:bg-emerald-600 text-white h-8 px-3 text-xs">
             <Plus className="h-4 w-4 mr-2" />
             Add Category
           </Button>
@@ -161,7 +161,7 @@ export default function CategoriesPage() {
       </div>
 
       {/* Filters */}
-      <div className="bg-white rounded-lg border p-4">
+      <div className="bg-white rounded-lg border p-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <div className="relative flex-1 max-w-md">
@@ -170,25 +170,25 @@ export default function CategoriesPage() {
                 placeholder="Search by Category name"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
+                className="pl-10 h-8 text-xs"
               />
             </div>
             
-            <Button className="bg-emerald-500 hover:bg-emerald-600 text-white">
+            <Button className="bg-emerald-500 hover:bg-emerald-600 text-white h-8 px-4 text-xs">
               Filter
             </Button>
-            <Button variant="outline">
+            <Button variant="outline" className="h-8 px-4 text-xs">
               Reset
             </Button>
           </div>
 
           {/* Parents Only Toggle */}
           <div className="flex items-center space-x-3">
-            <label className="text-sm font-medium text-gray-700">Parents Only</label>
+            <label className="text-xs font-medium text-gray-700">Parents Only</label>
             <Switch
               checked={parentsOnly}
               onCheckedChange={setParentsOnly}
-              className="data-[state=checked]:bg-emerald-500"
+              className="data-[state=checked]:bg-emerald-500 scale-75"
             />
           </div>
         </div>
@@ -198,59 +198,59 @@ export default function CategoriesPage() {
       <div className="bg-white rounded-lg border">
         <Table>
           <TableHeader>
-            <TableRow className="border-gray-100">
+            <TableRow className="border-gray-100 bg-gray-50 h-10">
               <TableHead className="w-12">
                 <Checkbox
                   checked={selectedCategories.length === categories.length}
                   onCheckedChange={handleSelectAll}
                 />
               </TableHead>
-              <TableHead className="font-medium text-gray-600">ID</TableHead>
-              <TableHead className="font-medium text-gray-600">ICON</TableHead>
-              <TableHead className="font-medium text-gray-600">NAME</TableHead>
-              <TableHead className="font-medium text-gray-600">DESCRIPTION</TableHead>
-              <TableHead className="font-medium text-gray-600">PUBLISHED</TableHead>
-              <TableHead className="font-medium text-gray-600">ACTIONS</TableHead>
+              <TableHead className="font-bold text-gray-900 text-xs uppercase">ID</TableHead>
+              <TableHead className="font-bold text-gray-900 text-xs uppercase">ICON</TableHead>
+              <TableHead className="font-bold text-gray-900 text-xs uppercase">NAME</TableHead>
+              <TableHead className="font-bold text-gray-900 text-xs uppercase">DESCRIPTION</TableHead>
+              <TableHead className="font-bold text-gray-900 text-xs uppercase">PUBLISHED</TableHead>
+              <TableHead className="font-bold text-gray-900 text-xs uppercase">ACTIONS</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {categories.map((category) => (
-              <TableRow key={category.id} className="border-gray-50 hover:bg-gray-50/50">
+              <TableRow key={category.id} className="border-gray-50 hover:bg-gray-50/50 h-12">
                 <TableCell>
                   <Checkbox
                     checked={selectedCategories.includes(category.id)}
                     onCheckedChange={(checked) => handleSelectCategory(category.id, checked as boolean)}
                   />
                 </TableCell>
-                <TableCell className="font-medium text-gray-900">
+                <TableCell className="text-gray-900 text-xs font-bold">
                   {category.id}
                 </TableCell>
                 <TableCell>
-                  <div className="w-8 h-8 flex items-center justify-center text-xl">
+                  <div className="w-6 h-6 flex items-center justify-center text-lg">
                     {category.icon}
                   </div>
                 </TableCell>
-                <TableCell className="font-medium text-gray-900">
+                <TableCell className="text-gray-900 text-xs whitespace-nowrap">
                   {category.name}
                 </TableCell>
-                <TableCell className="text-gray-600 max-w-xs">
+                <TableCell className="text-gray-900 text-xs max-w-xs">
                   {category.description}
                 </TableCell>
                 <TableCell>
                   <Switch
                     checked={category.published}
-                    className="data-[state=checked]:bg-emerald-500"
+                    className="data-[state=checked]:bg-emerald-500 scale-75"
                   />
                 </TableCell>
                 <TableCell>
                   <div className="flex items-center space-x-2">
-                    <Button variant="ghost" size="icon" className="h-8 w-8">
+                    <Button variant="ghost" size="icon" className="h-6 w-6">
                       <Eye className="h-4 w-4 text-gray-500" />
                     </Button>
-                    <Button variant="ghost" size="icon" className="h-8 w-8">
+                    <Button variant="ghost" size="icon" className="h-6 w-6">
                       <Edit className="h-4 w-4 text-gray-500" />
                     </Button>
-                    <Button variant="ghost" size="icon" className="h-8 w-8">
+                    <Button variant="ghost" size="icon" className="h-6 w-6">
                       <Trash2 className="h-4 w-4 text-gray-500" />
                     </Button>
                   </div>

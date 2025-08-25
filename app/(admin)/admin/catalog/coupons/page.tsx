@@ -173,24 +173,24 @@ export default function CouponsPage() {
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-gray-900">Coupon</h1>
+        <h1 className="text-xl font-bold text-gray-900">Coupon</h1>
         <div className="flex items-center space-x-3">
-          <Button variant="outline" size="sm" className="text-gray-600">
+          <Button variant="outline" size="sm" className="text-gray-600 h-8 px-3 text-xs">
             <Download className="h-4 w-4 mr-2" />
             Export
           </Button>
-          <Button variant="outline" size="sm" className="text-gray-600">
+          <Button variant="outline" size="sm" className="text-gray-600 h-8 px-3 text-xs">
             <Upload className="h-4 w-4 mr-2" />
             Import
           </Button>
-          <Button size="sm" className="bg-orange-500 hover:bg-orange-600 text-white">
+          <Button size="sm" className="bg-orange-500 hover:bg-orange-600 text-white h-8 px-3 text-xs">
             Bulk Action
           </Button>
-          <Button size="sm" className="bg-pink-500 hover:bg-pink-600 text-white">
+          <Button size="sm" className="bg-pink-500 hover:bg-pink-600 text-white h-8 px-3 text-xs">
             <Trash2 className="h-4 w-4 mr-2" />
             Delete
           </Button>
-          <Button size="sm" className="bg-emerald-500 hover:bg-emerald-600 text-white">
+          <Button size="sm" className="bg-emerald-500 hover:bg-emerald-600 text-white h-8 px-3 text-xs">
             <Plus className="h-4 w-4 mr-2" />
             Add Coupon
           </Button>
@@ -198,7 +198,7 @@ export default function CouponsPage() {
       </div>
 
       {/* Filters */}
-      <div className="bg-white rounded-lg border p-4">
+      <div className="bg-white rounded-lg border p-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <div className="relative flex-1 max-w-md">
@@ -207,14 +207,14 @@ export default function CouponsPage() {
                 placeholder="Search by coupon code/name"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
+                className="pl-10 h-8 text-xs"
               />
             </div>
             
-            <Button className="bg-emerald-500 hover:bg-emerald-600 text-white">
+            <Button className="bg-emerald-500 hover:bg-emerald-600 text-white h-8 px-4 text-xs">
               Filter
             </Button>
-            <Button variant="outline">
+            <Button variant="outline" className="h-8 px-4 text-xs">
               Reset
             </Button>
           </div>
@@ -225,26 +225,26 @@ export default function CouponsPage() {
       <div className="bg-white rounded-lg border">
         <Table>
           <TableHeader>
-            <TableRow className="border-gray-100">
+            <TableRow className="border-gray-100 bg-gray-50 h-10">
               <TableHead className="w-12">
                 <Checkbox
                   checked={selectedCoupons.length === coupons.length}
                   onCheckedChange={handleSelectAll}
                 />
               </TableHead>
-              <TableHead className="font-medium text-gray-600">CAMPAIGN NAME</TableHead>
-              <TableHead className="font-medium text-gray-600">CODE</TableHead>
-              <TableHead className="font-medium text-gray-600">DISCOUNT</TableHead>
-              <TableHead className="font-medium text-gray-600">PUBLISHED</TableHead>
-              <TableHead className="font-medium text-gray-600">START DATE</TableHead>
-              <TableHead className="font-medium text-gray-600">END DATE</TableHead>
-              <TableHead className="font-medium text-gray-600">STATUS</TableHead>
-              <TableHead className="font-medium text-gray-600">ACTIONS</TableHead>
+              <TableHead className="font-bold text-gray-900 text-xs uppercase">CAMPAIGN NAME</TableHead>
+              <TableHead className="font-bold text-gray-900 text-xs uppercase">CODE</TableHead>
+              <TableHead className="font-bold text-gray-900 text-xs uppercase">DISCOUNT</TableHead>
+              <TableHead className="font-bold text-gray-900 text-xs uppercase">PUBLISHED</TableHead>
+              <TableHead className="font-bold text-gray-900 text-xs uppercase">START DATE</TableHead>
+              <TableHead className="font-bold text-gray-900 text-xs uppercase">END DATE</TableHead>
+              <TableHead className="font-bold text-gray-900 text-xs uppercase">STATUS</TableHead>
+              <TableHead className="font-bold text-gray-900 text-xs uppercase">ACTIONS</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {coupons.map((coupon) => (
-              <TableRow key={coupon.id} className="border-gray-50 hover:bg-gray-50/50">
+              <TableRow key={coupon.id} className="border-gray-50 hover:bg-gray-50/50 h-12">
                 <TableCell>
                   <Checkbox
                     checked={selectedCoupons.includes(coupon.id)}
@@ -253,41 +253,41 @@ export default function CouponsPage() {
                 </TableCell>
                 <TableCell>
                   <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center text-xl">
+                    <div className="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center text-lg">
                       {coupon.icon}
                     </div>
-                    <span className="font-medium text-gray-900">{coupon.campaignName}</span>
+                    <span className="text-gray-900 text-xs whitespace-nowrap">{coupon.campaignName}</span>
                   </div>
                 </TableCell>
-                <TableCell className="font-medium text-gray-900">
+                <TableCell className="text-gray-900 text-xs font-bold whitespace-nowrap">
                   {coupon.code}
                 </TableCell>
-                <TableCell className="font-medium text-gray-900">
+                <TableCell className="text-gray-900 text-xs font-bold whitespace-nowrap">
                   {coupon.discount}
                 </TableCell>
                 <TableCell>
                   <Switch
                     checked={coupon.published}
-                    className="data-[state=checked]:bg-emerald-500"
+                    className="data-[state=checked]:bg-emerald-500 scale-75"
                   />
                 </TableCell>
-                <TableCell className="text-gray-600">
+                <TableCell className="text-gray-900 text-xs whitespace-nowrap">
                   {coupon.startDate}
                 </TableCell>
-                <TableCell className="text-gray-600">
+                <TableCell className="text-gray-900 text-xs whitespace-nowrap">
                   {coupon.endDate}
                 </TableCell>
                 <TableCell>
-                  <Badge className={`${coupon.statusColor} text-white hover:${coupon.statusColor}`}>
+                  <Badge className={`${coupon.statusColor} text-white hover:${coupon.statusColor} text-xs whitespace-nowrap h-6 px-2`}>
                     {coupon.status}
                   </Badge>
                 </TableCell>
                 <TableCell>
                   <div className="flex items-center space-x-2">
-                    <Button variant="ghost" size="icon" className="h-8 w-8">
+                    <Button variant="ghost" size="icon" className="h-6 w-6">
                       <Edit className="h-4 w-4 text-gray-500" />
                     </Button>
-                    <Button variant="ghost" size="icon" className="h-8 w-8">
+                    <Button variant="ghost" size="icon" className="h-6 w-6">
                       <Trash2 className="h-4 w-4 text-gray-500" />
                     </Button>
                   </div>

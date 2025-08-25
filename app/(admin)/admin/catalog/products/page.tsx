@@ -355,26 +355,26 @@ export default function ProductsPage() {
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-gray-900">Products</h1>
+        <h1 className="text-xl font-bold text-gray-900">Products</h1>
         <div className="flex items-center space-x-3">
-          <Button variant="outline" size="sm" className="text-gray-600">
+          <Button variant="outline" size="sm" className="text-gray-600 h-8 px-3 text-xs">
             <Download className="h-4 w-4 mr-2" />
             Export
           </Button>
-          <Button variant="outline" size="sm" className="text-gray-600">
+          <Button variant="outline" size="sm" className="text-gray-600 h-8 px-3 text-xs">
             <Upload className="h-4 w-4 mr-2" />
             Import
           </Button>
-          <Button size="sm" className="bg-orange-500 hover:bg-orange-600 text-white">
+          <Button size="sm" className="bg-orange-500 hover:bg-orange-600 text-white h-8 px-3 text-xs">
             Bulk Action
           </Button>
-          <Button size="sm" className="bg-pink-500 hover:bg-pink-600 text-white">
+          <Button size="sm" className="bg-pink-500 hover:bg-pink-600 text-white h-8 px-3 text-xs">
             <Trash2 className="h-4 w-4 mr-2" />
             Delete
           </Button>
           <Button 
             size="sm" 
-            className="bg-emerald-500 hover:bg-emerald-600 text-white"
+            className="bg-emerald-500 hover:bg-emerald-600 text-white h-8 px-3 text-xs"
             onClick={() => setShowAddProduct(true)}
           >
             <Plus className="h-4 w-4 mr-2" />
@@ -384,7 +384,7 @@ export default function ProductsPage() {
       </div>
 
       {/* Filters */}
-      <div className="bg-white rounded-lg border p-4">
+      <div className="bg-white rounded-lg border p-3">
         <div className="flex items-center space-x-4">
           <div className="relative flex-1 max-w-md">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
@@ -392,12 +392,12 @@ export default function ProductsPage() {
               placeholder="Search Product"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10"
+              className="pl-10 h-8 text-xs"
             />
           </div>
           
           <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-            <SelectTrigger className="w-48">
+            <SelectTrigger className="w-32 h-8 text-xs">
               <SelectValue placeholder="Category" />
             </SelectTrigger>
             <SelectContent>
@@ -410,7 +410,7 @@ export default function ProductsPage() {
           </Select>
 
           <Select value={selectedPrice} onValueChange={setSelectedPrice}>
-            <SelectTrigger className="w-32">
+            <SelectTrigger className="w-24 h-8 text-xs">
               <SelectValue placeholder="Price" />
             </SelectTrigger>
             <SelectContent>
@@ -422,10 +422,10 @@ export default function ProductsPage() {
             </SelectContent>
           </Select>
 
-          <Button className="bg-emerald-500 hover:bg-emerald-600 text-white">
+          <Button className="bg-emerald-500 hover:bg-emerald-600 text-white h-8 px-4 text-xs">
             Filter
           </Button>
-          <Button variant="outline">
+          <Button variant="outline" className="h-8 px-4 text-xs">
             Reset
           </Button>
         </div>
@@ -435,27 +435,27 @@ export default function ProductsPage() {
       <div className="bg-white rounded-lg border">
         <Table>
           <TableHeader>
-            <TableRow className="border-gray-100">
+            <TableRow className="border-gray-100 bg-gray-50 h-10">
               <TableHead className="w-12">
                 <Checkbox
                   checked={selectedProducts.length === products.length}
                   onCheckedChange={handleSelectAll}
                 />
               </TableHead>
-              <TableHead className="font-medium text-gray-600">PRODUCT NAME</TableHead>
-              <TableHead className="font-medium text-gray-600">CATEGORY</TableHead>
-              <TableHead className="font-medium text-gray-600">PRICE</TableHead>
-              <TableHead className="font-medium text-gray-600">SALE PRICE</TableHead>
-              <TableHead className="font-medium text-gray-600">STOCK</TableHead>
-              <TableHead className="font-medium text-gray-600">STATUS</TableHead>
-              <TableHead className="font-medium text-gray-600">VIEW</TableHead>
-              <TableHead className="font-medium text-gray-600">PUBLISHED</TableHead>
-              <TableHead className="font-medium text-gray-600">ACTIONS</TableHead>
+              <TableHead className="font-bold text-gray-900 text-xs uppercase">PRODUCT NAME</TableHead>
+              <TableHead className="font-bold text-gray-900 text-xs uppercase">CATEGORY</TableHead>
+              <TableHead className="font-bold text-gray-900 text-xs uppercase">PRICE</TableHead>
+              <TableHead className="font-bold text-gray-900 text-xs uppercase">SALE PRICE</TableHead>
+              <TableHead className="font-bold text-gray-900 text-xs uppercase">STOCK</TableHead>
+              <TableHead className="font-bold text-gray-900 text-xs uppercase">STATUS</TableHead>
+              <TableHead className="font-bold text-gray-900 text-xs uppercase">VIEW</TableHead>
+              <TableHead className="font-bold text-gray-900 text-xs uppercase">PUBLISHED</TableHead>
+              <TableHead className="font-bold text-gray-900 text-xs uppercase">ACTIONS</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {products.map((product) => (
-              <TableRow key={product.id} className="border-gray-50">
+              <TableRow key={product.id} className="border-gray-50 h-12">
                 <TableCell>
                   <Checkbox
                     checked={selectedProducts.includes(product.id)}
@@ -467,41 +467,41 @@ export default function ProductsPage() {
                     <img
                       src={product.image}
                       alt={product.name}
-                      className="w-8 h-8 rounded object-cover flex-shrink-0"
+                      className="w-6 h-6 rounded object-cover flex-shrink-0"
                     />
-                    <span className="font-medium text-gray-900 text-xs whitespace-nowrap">{product.name}</span>
+                    <span className="text-gray-900 text-xs whitespace-nowrap">{product.name}</span>
                   </div>
                 </TableCell>
-                <TableCell className="text-gray-600 text-xs whitespace-nowrap">{product.category}</TableCell>
-                <TableCell className="font-medium text-gray-900">
-                  <span className="text-xs whitespace-nowrap">{formatPrice(product.price)}</span>
+                <TableCell className="text-gray-900 text-xs whitespace-nowrap">{product.category}</TableCell>
+                <TableCell className="text-gray-900 text-xs font-bold whitespace-nowrap">
+                  {formatPrice(product.price)}
                 </TableCell>
-                <TableCell className="font-medium text-gray-900">
-                  <span className="text-xs whitespace-nowrap">{formatPrice(product.salePrice)}</span>
+                <TableCell className="text-gray-900 text-xs font-bold whitespace-nowrap">
+                  {formatPrice(product.salePrice)}
                 </TableCell>
-                <TableCell className="text-gray-900 text-xs">{product.stock}</TableCell>
+                <TableCell className="text-gray-900 text-xs font-bold">{product.stock}</TableCell>
                 <TableCell>
-                  <Badge className="bg-emerald-500 text-white hover:bg-emerald-500 text-xs whitespace-nowrap">
+                  <Badge className="bg-emerald-500 text-white hover:bg-emerald-500 text-xs whitespace-nowrap h-6 px-2">
                     {product.status}
                   </Badge>
                 </TableCell>
                 <TableCell>
-                  <Button variant="ghost" size="icon" className="h-8 w-8">
+                  <Button variant="ghost" size="icon" className="h-6 w-6">
                     <Eye className="h-4 w-4 text-gray-500" />
                   </Button>
                 </TableCell>
                 <TableCell>
                   <Switch
                     checked={product.published}
-                    className="data-[state=checked]:bg-emerald-500"
+                    className="data-[state=checked]:bg-emerald-500 scale-75"
                   />
                 </TableCell>
                 <TableCell>
                   <div className="flex items-center space-x-2">
-                    <Button variant="ghost" size="icon" className="h-8 w-8">
+                    <Button variant="ghost" size="icon" className="h-6 w-6">
                       <Edit className="h-4 w-4 text-gray-500" />
                     </Button>
-                    <Button variant="ghost" size="icon" className="h-8 w-8">
+                    <Button variant="ghost" size="icon" className="h-6 w-6">
                       <Trash2 className="h-4 w-4 text-gray-500" />
                     </Button>
                   </div>
