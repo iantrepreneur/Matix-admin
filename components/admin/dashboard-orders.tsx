@@ -121,15 +121,15 @@ export function DashboardOrders() {
                 <TableRow key={index} className="border-gray-100 hover:bg-gray-50">
                   <TableCell className="font-bold text-gray-900 text-sm">{order.invoiceNo}</TableCell>
                   <TableCell>
-                    <div className="text-sm text-gray-900">{order.orderTime}</div>
+                    <div className="text-xs text-gray-900">{order.orderTime}</div>
                   </TableCell>
-                  <TableCell className="font-medium text-gray-900">{order.customerName}</TableCell>
+                  <TableCell className="font-medium text-gray-900 text-sm">{order.customerName}</TableCell>
                   <TableCell>
-                    <span className="text-gray-900 font-bold">{order.method}</span>
+                    <span className="text-gray-900 font-bold text-sm">{order.method}</span>
                   </TableCell>
-                  <TableCell className="font-bold text-gray-900">{order.amount}</TableCell>
+                  <TableCell className="font-bold text-gray-900 text-sm">{order.amount}</TableCell>
                   <TableCell>
-                    <Badge className={`${order.statusColor} text-white hover:${order.statusColor} font-medium px-3 py-1 rounded-full`}>
+                    <Badge className={`${order.statusColor} text-white hover:${order.statusColor} font-medium px-2 py-1 rounded-full text-xs`}>
                       {order.status}
                     </Badge>
                   </TableCell>
