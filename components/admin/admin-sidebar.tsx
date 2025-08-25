@@ -1,322 +1,188 @@
-"use client";
-
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Switch } from "@/components/ui/switch";
-import { Checkbox } from "@/components/ui/checkbox";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import {
-  Search,
-  Download,
-  Upload,
-  Trash2,
-  Plus,
-  Edit,
-  ChevronLeft,
-  ChevronRight,
+  LayoutDashboard,
+  Package,
+  Users,
+  ShoppingCart,
+  UserCheck,
+  Building2,
+  FileText,
+  Truck,
+  Settings,
+  Globe,
+  Store,
+  LogOut,
+  ChevronDown,
+  Tag,
+  Grid3X3,
+  Ticket
 } from "lucide-react";
+import { useState } from "react";
 
-// Données mockées avicoles
-const coupons = [
-  {
-    id: 1,
-    icon: "🎁",
-    campaignName: "Promo Ramadan",
-    code: "RAMADAN25",
-    discount: "15%",
-    published: true,
-    startDate: "15 Mar, 2025",
-    endDate: "15 Apr, 2025",
-    status: "Active",
-    statusColor: "bg-emerald-500",
-  },
-  {
-    id: 2,
-    icon: "🐔",
-    campaignName: "Nouveau Client Poulets",
-    code: "NEWBIRD50",
-    discount: "5,000 FCFA",
-    published: true,
-    startDate: "01 Jan, 2025",
-    endDate: "31 Dec, 2025",
-    status: "Active",
-    statusColor: "bg-emerald-500",
-  },
-  {
-    id: 3,
-    icon: "🥚",
-    campaignName: "Promotion Poussins",
-    code: "POUSSIN20",
-    discount: "20%",
-    published: false,
-    startDate: "10 Feb, 2025",
-    endDate: "28 Feb, 2025",
-    status: "Expired",
-    statusColor: "bg-red-500",
-  },
-  {
-    id: 4,
-    icon: "🏠",
-    campaignName: "Équipement Élevage",
-    code: "EQUIPMT10",
-    discount: "10%",
-    published: true,
-    startDate: "01 Mar, 2025",
-    endDate: "30 Jun, 2025",
-    status: "Active",
-    statusColor: "bg-emerald-500",
-  },
-  {
-    id: 5,
-    icon: "🌾",
-    campaignName: "Aliments Volume",
-    code: "ALIMENT100",
-    discount: "10,000 FCFA",
-    published: true,
-    startDate: "15 Jan, 2025",
-    endDate: "15 Jul, 2025",
-    status: "Active",
-    statusColor: "bg-emerald-500",
-  },
-  {
-    id: 6,
-    icon: "💉",
-    campaignName: "Vaccins Groupés",
-    code: "VACCIN15",
-    discount: "15%",
-    published: true,
-    startDate: "01 Feb, 2025",
-    endDate: "31 Jan, 2026",
-    status: "Active",
-    statusColor: "bg-emerald-500",
-  },
-  {
-    id: 7,
-    icon: "🚚",
-    campaignName: "Livraison Gratuite",
-    code: "FREESHIP",
-    discount: "100%",
-    published: true,
-    startDate: "01 Apr, 2025",
-    endDate: "30 Apr, 2025",
-    status: "Active",
-    statusColor: "bg-emerald-500",
-  },
-  {
-    id: 8,
-    icon: "🎉",
-    campaignName: "Fête Tabaski",
-    code: "TABASKI30",
-    discount: "30%",
-    published: true,
-    startDate: "01 Jun, 2025",
-    endDate: "15 Jun, 2025",
-    status: "Active",
-    statusColor: "bg-emerald-500",
-  },
-  {
-    id: 9,
-    icon: "🔄",
-    campaignName: "Client Fidèle",
-    code: "LOYAL25",
-    discount: "25%",
-    published: true,
-    startDate: "01 Jan, 2025",
-    endDate: "31 Dec, 2025",
-    status: "Active",
-    statusColor: "bg-emerald-500",
-  },
-  {
-    id: 10,
-    icon: "⚡",
-    campaignName: "Flash Weekend",
-    code: "FLASH40",
-    discount: "40%",
-    published: false,
-    startDate: "28 Feb, 2025",
-    endDate: "02 Mar, 2025",
-    status: "Expired",
-    statusColor: "bg-red-500",
-  },
-];
+interface AdminSidebarProps {
+  sidebarOpen: boolean;
+  setSidebarOpen: (open: boolean) => void;
+}
 
-export default function CouponsPage() {
-  const [selectedCoupons, setSelectedCoupons] = useState<number[]>([]);
-  const [searchTerm, setSearchTerm] = useState("");
+export function AdminSidebar({ sidebarOpen, setSidebarOpen }: AdminSidebarProps) {
+  const pathname = usePathname();
+  const [catalogOpen, setCatalogOpen] = useState(true);
 
-  const handleSelectAll = (checked: boolean) => {
-    if (checked) {
-      setSelectedCoupons(coupons.map(c => c.id));
-    } else {
-      setSelectedCoupons([]);
-    }
-  };
-
-  const handleSelectCoupon = (couponId: number, checked: boolean) => {
-    if (checked) {
-      setSelectedCoupons([...selectedCoupons, couponId]);
-    } else {
-      setSelectedCoupons(selectedCoupons.filter(id => id !== couponId));
-    }
-  };
+  const navigation = [
+    {
+      name: "Dashboard",
+      href: "/admin",
+      icon: LayoutDashboard,
+      current: pathname === "/admin",
+    },
+    {
+      name: "Catalogue",
+      icon: Package,
+      current: pathname.startsWith("/admin/catalog"),
+      children: [
+        {
+          name: "Produits",
+          href: "/admin/catalog/products",
+          icon: Package,
+          current: pathname === "/admin/catalog/products",
+        },
+        {
+          name: "Coupon",
+          href: "/admin/catalog/coupons",
+          icon: Ticket,
+          current: pathname === "/admin/catalog/coupons",
+        },
+        {
+          name: "Categories",
+          href: "/admin/catalog/categories",
+          icon: Grid3X3,
+          current: pathname === "/admin/catalog/categories",
+        },
+      ],
+    },
+    {
+      name: "Customers",
+      href: "/admin/customers",
+      icon: Users,
+      current: pathname === "/admin/customers",
+    },
+    {
+      name: "Orders",
+      href: "/admin/orders",
+      icon: ShoppingCart,
+      current: pathname === "/admin/orders",
+    },
+    {
+      name: "Our Staff",
+      href: "/admin/staff",
+      icon: UserCheck,
+      current: pathname === "/admin/staff",
+    },
+    {
+      name: "Settings",
+      href: "/admin/settings",
+      icon: Settings,
+      current: pathname === "/admin/settings",
+    },
+    {
+      name: "International",
+      href: "/admin/international",
+      icon: Globe,
+      current: pathname === "/admin/international",
+    },
+    {
+      name: "Online Store",
+      href: "/admin/store",
+      icon: Store,
+      current: pathname === "/admin/store",
+    },
+  ];
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <h1 className="text-xl font-bold text-gray-900">Coupon</h1>
-        <div className="flex items-center space-x-3">
-          <Button variant="outline" size="sm" className="text-gray-600 h-8 px-3 text-xs">
-            <Download className="h-4 w-4 mr-2" />
-            Export
-          </Button>
-          <Button variant="outline" size="sm" className="text-gray-600 h-8 px-3 text-xs">
-            <Upload className="h-4 w-4 mr-2" />
-            Import
-          </Button>
-          <Button size="sm" className="bg-orange-500 hover:bg-orange-600 text-white h-8 px-3 text-xs">
-            Bulk Action
-          </Button>
-          <Button size="sm" className="bg-pink-500 hover:bg-pink-600 text-white h-8 px-3 text-xs">
-            <Trash2 className="h-4 w-4 mr-2" />
-            Delete
-          </Button>
-          <Button size="sm" className="bg-emerald-500 hover:bg-emerald-600 text-white h-8 px-3 text-xs">
-            <Plus className="h-4 w-4 mr-2" />
-            Add Coupon
-          </Button>
-        </div>
-      </div>
-
-      {/* Filters */}
-      <div className="bg-white rounded-lg border p-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <div className="relative flex-1 max-w-md">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-              <Input
-                placeholder="Search by coupon code/name"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 h-8 text-xs"
-              />
-            </div>
-            
-            <Button className="bg-emerald-500 hover:bg-emerald-600 text-white h-8 px-4 text-xs">
-              Filter
-            </Button>
-            <Button variant="outline" className="h-8 px-4 text-xs">
-              Reset
-            </Button>
+    <div className="flex h-full flex-col bg-white border-r border-gray-200">
+      {/* Logo */}
+      <div className="flex h-16 items-center px-6 border-b border-gray-200">
+        <div className="flex items-center space-x-2">
+          <div className="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center">
+            <Package className="w-5 h-5 text-white" />
           </div>
+          <span className="text-xl font-bold text-gray-900">KACHA</span>
+          <span className="text-xl font-normal text-gray-600">BAZAR</span>
         </div>
       </div>
 
-      {/* Coupons Table */}
-      <div className="bg-white rounded-lg border">
-        <Table>
-          <TableHeader>
-            <TableRow className="border-gray-100 bg-gray-50 h-10">
-              <TableHead className="w-12">
-                <Checkbox
-                  checked={selectedCoupons.length === coupons.length}
-                  onCheckedChange={handleSelectAll}
-                />
-              </TableHead>
-              <TableHead className="font-bold text-gray-900 text-xs uppercase">CAMPAIGN NAME</TableHead>
-              <TableHead className="font-bold text-gray-900 text-xs uppercase">CODE</TableHead>
-              <TableHead className="font-bold text-gray-900 text-xs uppercase">DISCOUNT</TableHead>
-              <TableHead className="font-bold text-gray-900 text-xs uppercase">PUBLISHED</TableHead>
-              <TableHead className="font-bold text-gray-900 text-xs uppercase">START DATE</TableHead>
-              <TableHead className="font-bold text-gray-900 text-xs uppercase">END DATE</TableHead>
-              <TableHead className="font-bold text-gray-900 text-xs uppercase">STATUS</TableHead>
-              <TableHead className="font-bold text-gray-900 text-xs uppercase">ACTIONS</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {coupons.map((coupon) => (
-              <TableRow key={coupon.id} className="border-gray-50 hover:bg-gray-50/50 h-12">
-                <TableCell>
-                  <Checkbox
-                    checked={selectedCoupons.includes(coupon.id)}
-                    onCheckedChange={(checked) => handleSelectCoupon(coupon.id, checked as boolean)}
-                  />
-                </TableCell>
-                <TableCell>
+      {/* Navigation */}
+      <nav className="flex-1 px-4 py-6 space-y-2">
+        {navigation.map((item) => (
+          <div key={item.name}>
+            {item.children ? (
+              <div>
+                <button
+                  onClick={() => setCatalogOpen(!catalogOpen)}
+                  className={cn(
+                    "w-full flex items-center justify-between px-3 py-2 text-sm font-medium rounded-lg transition-colors",
+                    item.current
+                      ? "bg-emerald-50 text-emerald-700"
+                      : "text-gray-700 hover:bg-gray-50"
+                  )}
+                >
                   <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center text-lg">
-                      {coupon.icon}
-                    </div>
-                    <span className="text-gray-900 text-xs whitespace-nowrap">{coupon.campaignName}</span>
+                    <item.icon className="w-5 h-5" />
+                    <span>{item.name}</span>
                   </div>
-                </TableCell>
-                <TableCell className="text-gray-900 text-xs font-bold whitespace-nowrap">
-                  {coupon.code}
-                </TableCell>
-                <TableCell className="text-gray-900 text-xs font-bold whitespace-nowrap">
-                  {coupon.discount}
-                </TableCell>
-                <TableCell>
-                  <Switch
-                    checked={coupon.published}
-                    className="data-[state=checked]:bg-emerald-500 scale-75"
+                  <ChevronDown
+                    className={cn(
+                      "w-4 h-4 transition-transform",
+                      catalogOpen ? "rotate-180" : ""
+                    )}
                   />
-                </TableCell>
-                <TableCell className="text-gray-900 text-xs whitespace-nowrap">
-                  {coupon.startDate}
-                </TableCell>
-                <TableCell className="text-gray-900 text-xs whitespace-nowrap">
-                  {coupon.endDate}
-                </TableCell>
-                <TableCell>
-                  <Badge className={`${coupon.statusColor} text-white hover:${coupon.statusColor} text-xs whitespace-nowrap h-6 px-2`}>
-                    {coupon.status}
-                  </Badge>
-                </TableCell>
-                <TableCell>
-                  <div className="flex items-center space-x-2">
-                    <Button variant="ghost" size="icon" className="h-6 w-6">
-                      <Edit className="h-4 w-4 text-gray-500" />
-                    </Button>
-                    <Button variant="ghost" size="icon" className="h-6 w-6">
-                      <Trash2 className="h-4 w-4 text-gray-500" />
-                    </Button>
+                </button>
+                {catalogOpen && (
+                  <div className="ml-6 mt-2 space-y-1">
+                    {item.children.map((child) => (
+                      <Link
+                        key={child.name}
+                        href={child.href}
+                        className={cn(
+                          "flex items-center space-x-3 px-3 py-2 text-sm rounded-lg transition-colors",
+                          child.current
+                            ? "bg-emerald-50 text-emerald-700"
+                            : "text-gray-600 hover:bg-gray-50"
+                        )}
+                      >
+                        <span className="w-2 h-2 bg-gray-400 rounded-full" />
+                        <span>{child.name}</span>
+                      </Link>
+                    ))}
                   </div>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-
-        {/* Pagination */}
-        <div className="flex items-center justify-between px-6 py-4 border-t border-gray-100">
-          <Button variant="ghost" size="sm" className="text-gray-500">
-            <ChevronLeft className="h-4 w-4 mr-1" />
-            Previous
-          </Button>
-          
-          <div className="flex items-center space-x-2">
-            <Button variant="ghost" size="sm" className="bg-emerald-50 text-emerald-600">1</Button>
-            <Button variant="ghost" size="sm">2</Button>
-            <Button variant="ghost" size="sm">3</Button>
-            <span className="text-gray-400">...</span>
-            <Button variant="ghost" size="sm">8</Button>
+                )}
+              </div>
+            ) : (
+              <Link
+                href={item.href}
+                className={cn(
+                  "flex items-center space-x-3 px-3 py-2 text-sm font-medium rounded-lg transition-colors",
+                  item.current
+                    ? "bg-emerald-50 text-emerald-700"
+                    : "text-gray-700 hover:bg-gray-50"
+                )}
+              >
+                <item.icon className="w-5 h-5" />
+                <span>{item.name}</span>
+              </Link>
+            )}
           </div>
+        ))}
+      </nav>
 
-          <Button variant="ghost" size="sm" className="text-gray-500">
-            Next
-            <ChevronRight className="h-4 w-4 ml-1" />
-          </Button>
-        </div>
+      {/* Logout Button */}
+      <div className="p-4 border-t border-gray-200">
+        <button className="w-full flex items-center justify-center space-x-2 px-4 py-3 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-colors">
+          <LogOut className="w-4 h-4" />
+          <span className="text-sm font-medium">Log Out</span>
+        </button>
       </div>
     </div>
   );

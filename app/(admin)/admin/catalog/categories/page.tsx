@@ -119,7 +119,7 @@ const categories = [
   },
 ];
 
-export default function CategoriesPage() {
+const CategoriesPage = () => {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [parentsOnly, setParentsOnly] = useState(false);
@@ -243,7 +243,7 @@ export default function CategoriesPage() {
                     onCheckedChange={(checked) => handleSelectCategory(category.id, checked as boolean)}
                   />
                 </TableCell>
-                <TableCell className="text-gray-900 text-xs font-bold">
+                <TableCell className="text-gray-900 text-xs font-bold whitespace-nowrap">
                   {category.id}
                 </TableCell>
                 <TableCell>
@@ -254,7 +254,7 @@ export default function CategoriesPage() {
                 <TableCell className="text-gray-900 text-xs whitespace-nowrap">
                   {category.name}
                 </TableCell>
-                <TableCell className="text-gray-900 text-xs max-w-xs">
+                <TableCell className="text-gray-900 text-xs max-w-xs whitespace-nowrap">
                   {category.description}
                 </TableCell>
                 <TableCell>
@@ -546,4 +546,6 @@ export default function CategoriesPage() {
       </Dialog>
     </div>
   );
-}
+};
+
+export default CategoriesPage;
