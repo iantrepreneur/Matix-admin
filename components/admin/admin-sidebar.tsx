@@ -35,7 +35,7 @@ const menuItems = [
     icon: FileText,
   },
   {
-    title: "Produits",
+    title: "Catalogue",
     href: "/admin/catalog",
     icon: Store,
     submenu: [
@@ -44,11 +44,11 @@ const menuItems = [
         href: "/admin/catalog/products",
       },
       {
-        title: "Coupons",
+        title: "Coupon",
         href: "/admin/catalog/coupons",
       },
       {
-        title: "Catégories",
+        title: "Categories",
         href: "/admin/catalog/categories",
       }
     ]
