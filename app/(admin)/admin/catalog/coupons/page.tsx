@@ -23,7 +23,6 @@ import {
   Edit,
   ChevronLeft,
   ChevronRight,
-  X,
 } from "lucide-react";
 
 // Données mockées avicoles
@@ -153,8 +152,6 @@ const coupons = [
 export default function CouponsPage() {
   const [selectedCoupons, setSelectedCoupons] = useState<number[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [showEditModal, setShowEditModal] = useState(false);
-  const [selectedCoupon, setSelectedCoupon] = useState<any>(null);
 
   const handleSelectAll = (checked: boolean) => {
     if (checked) {
@@ -170,11 +167,6 @@ export default function CouponsPage() {
     } else {
       setSelectedCoupons(selectedCoupons.filter(id => id !== couponId));
     }
-  };
-
-  const handleEditCoupon = (coupon: any) => {
-    setSelectedCoupon(coupon);
-    setShowEditModal(true);
   };
 
   return (
@@ -228,165 +220,6 @@ export default function CouponsPage() {
           </div>
         </div>
       </div>
-
-      {/* Update Coupon Modal */}
-      {showEditModal && (
-        <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg shadow-xl w-full max-w-md max-h-[90vh] overflow-y-auto">
-            {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b">
-              <div>
-                <h2 className="text-lg font-semibold text-gray-900">Update Coupon</h2>
-                <p className="text-sm text-gray-600">Updated your coupon and necessary information from here</p>
-              </div>
-              <div className="flex items-center space-x-2">
-                <select className="text-xs border rounded px-2 py-1">
-                  <option>en</option>
-                </select>
-                <button 
-                  onClick={() => setShowEditModal(false)}
-                  className="text-red-500 hover:text-red-700"
-                >
-                  <X className="h-5 w-5" />
-                </button>
-              </div>
-            </div>
-
-            {/* Content */}
-            <div className="p-4 space-y-4">
-              {/* Coupon Banner Image */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Coupon Banner Image
-                </label>
-                <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center mb-3">
-                  <div className="text-emerald-500 mb-2">
-                    <svg className="w-8 h-8 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                    </svg>
-                  </div>
-                  <p className="text-gray-600 font-medium text-sm">Drag your images here</p>
-                  <p className="text-gray-400 text-xs">(Only *.jpeg, *.webp and *.png images will be accepted)</p>
-                </div>
-                
-                {/* Current Image Preview */}
-                <div className="relative inline-block">
-                  <img 
-                    src="https://images.pexels.com/photos/1300355/pexels-photo-1300355.jpeg?auto=compress&cs=tinysrgb&w=80&h=60&dpr=2" 
-                    alt="Coupon" 
-                    className="w-16 h-12 rounded object-cover"
-                  />
-                  <button className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
-                    ×
-                  </button>
-                </div>
-              </div>
-
-              {/* Campaign Name */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Campaign Name
-                </label>
-                <Input 
-                  defaultValue={selectedCoupon?.campaignName || "August Gift Voucher"}
-                  className="w-full"
-                />
-              </div>
-
-              {/* Campaign Code */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Campaign Code
-                </label>
-                <Input 
-                  defaultValue={selectedCoupon?.code || "AUGUST25"}
-                  className="w-full"
-                />
-              </div>
-
-              {/* Coupon Validity Time */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Coupon Validity Time
-                </label>
-                <Input 
-                  type="datetime-local"
-                  defaultValue="2025-10-31T16:30"
-                  className="w-full"
-                />
-              </div>
-
-              {/* Discount Type */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Discount Type
-                </label>
-                <div className="flex items-center">
-                  <Button className="bg-emerald-500 hover:bg-emerald-600 text-white rounded-full px-4 py-1 text-sm">
-                    Percentage
-                  </Button>
-                </div>
-              </div>
-
-              {/* DISCOUNT */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  DISCOUNT
-                </label>
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">%</span>
-                  <Input 
-                    defaultValue="50"
-                    className="pl-8"
-                  />
-                </div>
-              </div>
-
-              {/* Minimum Amount */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Minimum Amount
-                </label>
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
-                  <Input 
-                    defaultValue="2000"
-                    className="pl-8"
-                  />
-                </div>
-              </div>
-
-              {/* Published */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Published
-                </label>
-                <div className="flex items-center">
-                  <Button className="bg-emerald-500 hover:bg-emerald-600 text-white rounded-full px-4 py-1 text-sm">
-                    Yes
-                  </Button>
-                </div>
-              </div>
-            </div>
-
-            {/* Footer */}
-            <div className="flex justify-between p-4 border-t">
-              <Button 
-                variant="outline" 
-                onClick={() => setShowEditModal(false)}
-              >
-                Cancel
-              </Button>
-              <Button 
-                className="bg-emerald-500 hover:bg-emerald-600 text-white"
-                onClick={() => setShowEditModal(false)}
-              >
-                Update Coupon
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Coupons Table */}
       <div className="bg-white rounded-lg border">
@@ -451,12 +284,7 @@ export default function CouponsPage() {
                 </TableCell>
                 <TableCell>
                   <div className="flex items-center space-x-2">
-                    <Button 
-                      variant="ghost" 
-                      size="icon" 
-                      className="h-6 w-6"
-                      onClick={() => handleEditCoupon(coupon)}
-                    >
+                    <Button variant="ghost" size="icon" className="h-6 w-6">
                       <Edit className="h-4 w-4 text-gray-500" />
                     </Button>
                     <Button variant="ghost" size="icon" className="h-6 w-6">
