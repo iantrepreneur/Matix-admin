@@ -1,189 +1,229 @@
+"use client";
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 import { cn } from "@/lib/utils";
-import {
-  LayoutDashboard,
-  Package,
-  Users,
-  ShoppingCart,
-  UserCheck,
-  Building2,
-  FileText,
-  Truck,
+import { 
+  LayoutDashboard, 
+  Store, 
+  Users, 
+  ShoppingCart, 
+  Truck, 
+  Shield, 
   Settings,
-  Globe,
-  Store,
   LogOut,
   ChevronDown,
-  Tag,
-  Grid3X3,
-  Ticket
+  ChevronRight,
+  FileText
 } from "lucide-react";
-import { useState } from "react";
 
 interface AdminSidebarProps {
   sidebarOpen: boolean;
   setSidebarOpen: (open: boolean) => void;
 }
 
+const menuItems = [
+  {
+    title: "Dashboard",
+    href: "/admin",
+    icon: LayoutDashboard,
+  },
+  {
+    title: "Factures",
+    href: "/admin/invoices",
+    icon: FileText,
+  },
+  {
+    title: "Catalogue",
+    href: "/admin/catalog",
+    icon: Store,
+    submenu: [
+      {
+        title: "Produits",
+        href: "/admin/catalog/products",
+      },
+      {
+        title: "Coupon",
+        href: "/admin/catalog/coupons",
+      },
+      {
+        title: "Categories",
+        href: "/admin/catalog/categories",
+      }
+    ]
+  },
+  {
+    title: "Marketplace",
+    href: "/admin/marketplace",
+    icon: Store,
+  },
+  {
+    title: "Utilisateurs",
+    href: "/admin/users",
+    icon: Users,
+  },
+  {
+    title: "Commandes",
+    href: "/admin/orders",
+    icon: ShoppingCart,
+  },
+  {
+    title: "Livraison",
+    href: "/admin/delivery",
+    icon: Truck,
+  },
+  {
+    title: "KYC",
+    href: "/admin/kyc",
+    icon: Shield,
+  },
+  {
+    title: "Staff",
+    href: "/admin/staff",
+    icon: Users,
+  },
+  {
+    title: "Paramètres",
+    href: "/admin/settings",
+    icon: Settings,
+  },
+];
+
 export function AdminSidebar({ sidebarOpen, setSidebarOpen }: AdminSidebarProps) {
   const pathname = usePathname();
-  const [catalogOpen, setCatalogOpen] = useState(true);
+  const [expandedMenus, setExpandedMenus] = useState<string[]>(['Catalog']);
 
-  const navigation = [
-    {
-      name: "Dashboard",
-      href: "/admin",
-      icon: LayoutDashboard,
-      current: pathname === "/admin",
-    },
-    {
-      name: "Catalogue",
-      icon: Package,
-      current: pathname.startsWith("/admin/catalog"),
-      children: [
-        {
-          name: "Produits",
-          href: "/admin/catalog/products",
-          icon: Package,
-          current: pathname === "/admin/catalog/products",
-        },
-        {
-          name: "Coupon",
-          href: "/admin/catalog/coupons",
-          icon: Ticket,
-          current: pathname === "/admin/catalog/coupons",
-        },
-        {
-          name: "Categories",
-          href: "/admin/catalog/categories",
-          icon: Grid3X3,
-          current: pathname === "/admin/catalog/categories",
-        },
-      ],
-    },
-    {
-      name: "Customers",
-      href: "/admin/customers",
-      icon: Users,
-      current: pathname === "/admin/customers",
-    },
-    {
-      name: "Orders",
-      href: "/admin/orders",
-      icon: ShoppingCart,
-      current: pathname === "/admin/orders",
-    },
-    {
-      name: "Our Staff",
-      href: "/admin/staff",
-      icon: UserCheck,
-      current: pathname === "/admin/staff",
-    },
-    {
-      name: "Settings",
-      href: "/admin/settings",
-      icon: Settings,
-      current: pathname === "/admin/settings",
-    },
-    {
-      name: "International",
-      href: "/admin/international",
-      icon: Globe,
-      current: pathname === "/admin/international",
-    },
-    {
-      name: "Online Store",
-      href: "/admin/store",
-      icon: Store,
-      current: pathname === "/admin/store",
-    },
-  ];
+  const toggleMenu = (title: string) => {
+    setExpandedMenus(prev => 
+      prev.includes(title) 
+        ? prev.filter(item => item !== title)
+        : [...prev, title]
+    );
+  };
 
-  return (
-    <div className="flex h-full flex-col bg-white border-r border-gray-200">
+  const isMenuExpanded = (title: string) => expandedMenus.includes(title);
+
+  const SidebarContent = () => (
+    <div className="flex h-full w-full flex-col">
       {/* Logo */}
       <div className="flex h-16 items-center px-6 border-b border-gray-200">
         <div className="flex items-center space-x-2">
           <div className="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center">
-            <Package className="w-5 h-5 text-white" />
+            <Store className="w-5 h-5 text-white" />
           </div>
-          <span className="text-xl font-bold text-gray-900">KACHA</span>
-          <span className="text-xl font-normal text-gray-600">BAZAR</span>
+          <div>
+            <h1 className="text-lg font-bold text-gray-900">MATIX</h1>
+            <p className="text-xs text-gray-500 -mt-1">MART</p>
+          </div>
         </div>
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 px-4 py-6 space-y-2">
-        {navigation.map((item) => (
-          <div key={item.name}>
-            {item.children ? (
-              <div>
+      <nav className="flex-1 px-4 py-6 space-y-1">
+        {menuItems.map((item) => {
+          const isActive = pathname === item.href || (item.submenu && item.submenu.some(sub => pathname === sub.href));
+          const Icon = item.icon;
+          const hasSubmenu = item.submenu && item.submenu.length > 0;
+          const isExpanded = isMenuExpanded(item.title);
+          
+          return (
+            <div key={item.title}>
+              {/* Menu principal */}
+              {hasSubmenu ? (
                 <button
-                  onClick={() => setCatalogOpen(!catalogOpen)}
+                  onClick={() => toggleMenu(item.title)}
                   className={cn(
-                    "w-full flex items-center justify-between px-3 py-2 text-sm font-medium rounded-lg transition-colors",
-                    item.current
+                    "flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
+                    isActive
                       ? "bg-emerald-50 text-emerald-700"
-                      : "text-gray-700 hover:bg-gray-50"
+                      : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
                   )}
                 >
                   <div className="flex items-center space-x-3">
-                    <item.icon className="w-5 h-5" />
-                    <span>{item.name}</span>
+                    <Icon className={cn(
+                      "w-5 h-5",
+                      isActive ? "text-emerald-600" : "text-gray-400"
+                    )} />
+                    <span>{item.title}</span>
                   </div>
-                  <ChevronDown
-                    className={cn(
-                      "w-4 h-4 transition-transform",
-                      catalogOpen ? "rotate-180" : ""
-                    )}
-                  />
+                  {isExpanded ? (
+                    <ChevronDown className="w-4 h-4" />
+                  ) : (
+                    <ChevronRight className="w-4 h-4" />
+                  )}
                 </button>
-                {catalogOpen && (
-                  <div className="ml-6 mt-2 space-y-1">
-                    {item.children.map((child) => (
+              ) : (
+                <Link
+                  href={item.href}
+                  onClick={() => setSidebarOpen(false)}
+                  className={cn(
+                    "flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
+                    isActive
+                      ? "bg-emerald-50 text-emerald-700"
+                      : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                  )}
+                >
+                  <Icon className={cn(
+                    "w-5 h-5",
+                    isActive ? "text-emerald-600" : "text-gray-400"
+                  )} />
+                  <span>{item.title}</span>
+                </Link>
+              )}
+
+              {/* Sous-menu */}
+              {hasSubmenu && isExpanded && (
+                <div className="ml-8 mt-1 space-y-1">
+                  {item.submenu!.map((subItem) => {
+                    const isSubActive = pathname === subItem.href;
+                    return (
                       <Link
-                        key={child.name}
-                        href={child.href}
+                        key={subItem.href}
+                        href={subItem.href}
+                        onClick={() => setSidebarOpen(false)}
                         className={cn(
-                          "flex items-center space-x-3 px-3 py-2 text-sm rounded-lg transition-colors",
-                          child.current
+                          "block px-3 py-2 rounded-lg text-sm font-medium transition-colors",
+                          isSubActive
                             ? "bg-emerald-50 text-emerald-700"
-                            : "text-gray-600 hover:bg-gray-50"
+                            : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
                         )}
                       >
-                        <span className="w-2 h-2 bg-gray-400 rounded-full" />
-                        <span>{child.name}</span>
+                        {subItem.title}
                       </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ) : (
-              <Link
-                href={item.href}
-                className={cn(
-                  "flex items-center space-x-3 px-3 py-2 text-sm font-medium rounded-lg transition-colors",
-                  item.current
-                    ? "bg-emerald-50 text-emerald-700"
-                    : "text-gray-700 hover:bg-gray-50"
-                )}
-              >
-                <item.icon className="w-5 h-5" />
-                <span>{item.name}</span>
-              </Link>
-            )}
-          </div>
-        ))}
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          );
+        })}
       </nav>
 
-      {/* Logout Button */}
+      {/* Logout */}
       <div className="p-4 border-t border-gray-200">
-        <button className="w-full flex items-center justify-center space-x-2 px-4 py-3 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-colors">
-          <LogOut className="w-4 h-4" />
-          <span className="text-sm font-medium">Log Out</span>
+        <button className="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 w-full transition-colors">
+          <LogOut className="w-5 h-5 text-gray-400" />
+          <span>Log Out</span>
         </button>
       </div>
     </div>
+  );
+
+  return (
+    <>
+      {/* Desktop Sidebar */}
+      <div className="hidden lg:fixed lg:inset-y-0 lg:left-0 lg:z-50 lg:block lg:w-64 lg:bg-white lg:border-r lg:border-gray-200">
+        <SidebarContent />
+      </div>
+
+      {/* Mobile Sidebar */}
+      <div className={cn(
+        "fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 transform transition-transform duration-300 ease-in-out lg:hidden",
+        sidebarOpen ? "translate-x-0" : "-translate-x-full"
+      )}>
+        <SidebarContent />
+      </div>
+    </>
   );
 }
