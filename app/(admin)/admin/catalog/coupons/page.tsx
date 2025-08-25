@@ -23,6 +23,7 @@ import {
   Edit,
   ChevronLeft,
   ChevronRight,
+  X,
 } from "lucide-react";
 
 // Données mockées avicoles
