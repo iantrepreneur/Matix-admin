@@ -97,48 +97,48 @@ const orders = [
 
 export function DashboardOrders() {
   return (
-    <Card className="mt-8 border-0 shadow-sm">
+    <Card className="mt-8 border-0 shadow-sm overflow-hidden">
       <CardHeader>
         <CardTitle className="text-xl font-bold text-gray-900">Commandes Récentes</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="overflow-x-auto">
+        <div className="w-full">
           <Table>
             <TableHeader>
               <TableRow className="border-gray-100 bg-gray-50">
-                <TableHead className="font-bold text-gray-900 text-xs uppercase">N° FACTURE</TableHead>
-                <TableHead className="font-bold text-gray-900 text-xs uppercase">DATE COMMANDE</TableHead>
-                <TableHead className="font-bold text-gray-900 text-xs uppercase">CLIENT</TableHead>
-                <TableHead className="font-bold text-gray-900 text-xs uppercase">MÉTHODE</TableHead>
-                <TableHead className="font-bold text-gray-900 text-xs uppercase">MONTANT</TableHead>
-                <TableHead className="font-bold text-gray-900 text-xs uppercase">STATUS</TableHead>
-                <TableHead className="font-bold text-gray-900 text-xs uppercase">ACTION</TableHead>
-                <TableHead className="font-bold text-gray-900 text-xs uppercase">FACTURE</TableHead>
+                <TableHead className="font-bold text-gray-900 text-xs uppercase w-20">N° FACTURE</TableHead>
+                <TableHead className="font-bold text-gray-900 text-xs uppercase w-32">DATE COMMANDE</TableHead>
+                <TableHead className="font-bold text-gray-900 text-xs uppercase w-28">CLIENT</TableHead>
+                <TableHead className="font-bold text-gray-900 text-xs uppercase w-20">MÉTHODE</TableHead>
+                <TableHead className="font-bold text-gray-900 text-xs uppercase w-24">MONTANT</TableHead>
+                <TableHead className="font-bold text-gray-900 text-xs uppercase w-20">STATUS</TableHead>
+                <TableHead className="font-bold text-gray-900 text-xs uppercase w-24">ACTION</TableHead>
+                <TableHead className="font-bold text-gray-900 text-xs uppercase w-20">FACTURE</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {orders.map((order, index) => (
                 <TableRow key={index} className="border-gray-100 hover:bg-gray-50">
-                  <TableCell className="font-bold text-gray-900 text-xs whitespace-nowrap">{order.invoiceNo}</TableCell>
+                  <TableCell className="font-bold text-gray-900 text-xs">{order.invoiceNo}</TableCell>
                   <TableCell>
-                    <div className="text-xs text-gray-900 whitespace-nowrap">{order.orderTime}</div>
+                    <div className="text-xs text-gray-900">{order.orderTime}</div>
                   </TableCell>
-                  <TableCell className="font-medium text-gray-900 text-xs whitespace-nowrap">{order.customerName}</TableCell>
+                  <TableCell className="font-medium text-gray-900 text-xs">{order.customerName}</TableCell>
                   <TableCell>
-                    <span className="text-gray-900 font-bold text-xs whitespace-nowrap">{order.method}</span>
+                    <span className="text-gray-900 font-bold text-xs">{order.method}</span>
                   </TableCell>
-                  <TableCell className="font-bold text-gray-900 text-xs whitespace-nowrap">{order.amount}</TableCell>
+                  <TableCell className="font-bold text-gray-900 text-xs">{order.amount}</TableCell>
                   <TableCell>
-                    <Badge className={`${order.statusColor} text-white hover:${order.statusColor} font-medium px-2 py-1 rounded-full text-xs whitespace-nowrap`}>
+                    <Badge className={`${order.statusColor} text-white hover:${order.statusColor} font-medium px-1 py-0.5 rounded-full text-xs`}>
                       {order.status}
                     </Badge>
                   </TableCell>
                   <TableCell>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="outline" size="sm" className="h-7 px-2 text-xs font-medium whitespace-nowrap">
+                        <Button variant="outline" size="sm" className="h-6 px-1 text-xs font-medium">
                           <span>{order.status}</span>
-                          <ChevronDown className="h-3 w-3 ml-1" />
+                          <ChevronDown className="h-3 w-3 ml-0.5" />
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
@@ -150,12 +150,12 @@ export function DashboardOrders() {
                     </DropdownMenu>
                   </TableCell>
                   <TableCell>
-                    <div className="flex items-center space-x-2">
-                      <Button variant="ghost" size="icon" className="h-6 w-6 hover:bg-gray-100">
+                    <div className="flex items-center space-x-1">
+                      <Button variant="ghost" size="icon" className="h-5 w-5 hover:bg-gray-100">
                         <Print className="h-3 w-3 text-gray-600" />
                       </Button>
                       <Link href={`/admin/invoice/${order.invoiceNo.replace('AV', '')}`}>
-                        <Button variant="ghost" size="icon" className="h-6 w-6 hover:bg-gray-100">
+                        <Button variant="ghost" size="icon" className="h-5 w-5 hover:bg-gray-100">
                           <Search className="h-3 w-3 text-gray-600" />
                         </Button>
                       </Link>
