@@ -30,12 +30,7 @@ const menuItems = [
     icon: LayoutDashboard,
   },
   {
-    title: "Factures",
-    href: "/admin/invoices",
-    icon: FileText,
-  },
-  {
-    title: "Produits",
+    title: "Catalogue",
     href: "/admin/catalog",
     icon: Store,
     submenu: [
@@ -52,11 +47,6 @@ const menuItems = [
         href: "/admin/catalog/categories",
       }
     ]
-  },
-  {
-    title: "Marketplace",
-    href: "/admin/marketplace",
-    icon: Store,
   },
   {
     title: "Utilisateurs",
