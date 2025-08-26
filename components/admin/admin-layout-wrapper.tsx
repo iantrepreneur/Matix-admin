@@ -1,5 +1,3 @@
-"use client";
-
 import AdminLayoutUI from "@/components/admin/admin-layout-ui";
 
 export default function AdminLayoutWrapper({
