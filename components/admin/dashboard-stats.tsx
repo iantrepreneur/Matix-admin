@@ -43,20 +43,20 @@ const stats = [
 
 export function DashboardStats() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-5 gap-4 mb-8">
+    <div className="grid grid-cols-5 gap-3 mb-8">
       {stats.map((stat, index) => {
         const IconComponent = stat.icon;
         return (
           <Card key={index} className={`${stat.color} text-white border-0 overflow-hidden`}>
-            <CardContent className="p-3">
-              <div className="flex items-center justify-between mb-4">
-                <div className="p-1.5 bg-white/20 rounded-lg">
-                  <IconComponent className="h-4 w-4 text-white" />
+            <CardContent className="p-2">
+              <div className="flex items-center justify-between mb-2">
+                <div className="p-1 bg-white/20 rounded-lg">
+                  <IconComponent className="h-3 w-3 text-white" />
                 </div>
               </div>
-              <div className="space-y-2">
-                <p className="text-xs text-white/80 font-medium">{stat.title}</p>
-                <p className="text-lg font-bold text-white">{stat.value}</p>
+              <div className="space-y-1">
+                <p className="text-xs text-white/80 font-medium leading-tight">{stat.title}</p>
+                <p className="text-sm font-bold text-white leading-tight">{stat.value}</p>
                 {stat.details && (
                   <p className="text-xs text-white/70 leading-tight">{stat.details}</p>
                 )}
