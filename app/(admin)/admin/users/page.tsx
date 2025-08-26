@@ -320,7 +320,7 @@ export default function UsersPage() {
     };
 
     return types.map(type => (
-      <Badge key={type} className={`${badgeColors[type]} hover:${badgeColors[type]} text-xs mr-1`}>
+      <Badge key={type} className={`${badgeColors[type]} hover:${badgeColors[type]} text-xs mr-1 px-1 py-0.5 h-5`}>
         {typeLabels[type]}
       </Badge>
     ));
@@ -332,7 +332,7 @@ export default function UsersPage() {
       "En attente": "bg-orange-500 text-white",
       "Rejeté": "bg-red-500 text-white"
     };
-    return <Badge className={`${colors[status]} hover:${colors[status]}`}>{status}</Badge>;
+    return <Badge className={`${colors[status]} hover:${colors[status]} text-xs px-1 py-0.5 h-5`}>{status}</Badge>;
   };
 
   const getAccountStatusBadge = (status: AccountStatus) => {
@@ -341,7 +341,7 @@ export default function UsersPage() {
       "Suspendu": "bg-red-500 text-white",
       "Inactif": "bg-gray-500 text-white"
     };
-    return <Badge className={`${colors[status]} hover:${colors[status]}`}>{status}</Badge>;
+    return <Badge className={`${colors[status]} hover:${colors[status]} text-xs px-1 py-0.5 h-5`}>{status}</Badge>;
   };
 
   const getInitials = (nom: string) => {
@@ -429,29 +429,30 @@ export default function UsersPage() {
         <TabsContent value={activeTab} className="mt-6">
           {/* Tableau Utilisateurs */}
           <div className="bg-white rounded-lg border">
-            <Table>
+            <div className="overflow-hidden">
+              <Table>
               <TableHeader>
-                <TableRow className="border-gray-100">
-                  <TableHead className="w-12">
+                <TableRow className="border-gray-100 h-10">
+                  <TableHead className="w-8">
                     <Checkbox
                       checked={selectedUsers.length === filteredUsers.length && filteredUsers.length > 0}
                       onCheckedChange={handleSelectAll}
                     />
                   </TableHead>
-                  <TableHead className="font-medium text-gray-600">UTILISATEUR</TableHead>
-                  <TableHead className="font-medium text-gray-600">TÉLÉPHONE</TableHead>
-                  <TableHead className="font-medium text-gray-600">EMAIL</TableHead>
-                  <TableHead className="font-medium text-gray-600">LOCALISATION</TableHead>
-                  <TableHead className="font-medium text-gray-600">TYPE(S)</TableHead>
-                  <TableHead className="font-medium text-gray-600">KYC</TableHead>
-                  <TableHead className="font-medium text-gray-600">STATUT</TableHead>
-                  <TableHead className="font-medium text-gray-600">INSCRIPTION</TableHead>
-                  <TableHead className="font-medium text-gray-600">ACTIONS</TableHead>
+                  <TableHead className="font-medium text-gray-600 w-32">UTILISATEUR</TableHead>
+                  <TableHead className="font-medium text-gray-600 w-24">TÉLÉPHONE</TableHead>
+                  <TableHead className="font-medium text-gray-600 w-32">EMAIL</TableHead>
+                  <TableHead className="font-medium text-gray-600 w-24">LOCALISATION</TableHead>
+                  <TableHead className="font-medium text-gray-600 w-20">TYPE(S)</TableHead>
+                  <TableHead className="font-medium text-gray-600 w-16">KYC</TableHead>
+                  <TableHead className="font-medium text-gray-600 w-16">STATUT</TableHead>
+                  <TableHead className="font-medium text-gray-600 w-20">INSCRIPTION</TableHead>
+                  <TableHead className="font-medium text-gray-600 w-20">ACTIONS</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {filteredUsers.map((user) => (
-                  <TableRow key={user.id} className="border-gray-50 hover:bg-gray-50/50">
+                  <TableRow key={user.id} className="border-gray-50 hover:bg-gray-50/50 h-12">
                     <TableCell>
                       <Checkbox
                         checked={selectedUsers.includes(user.id)}
@@ -460,21 +461,21 @@ export default function UsersPage() {
                     </TableCell>
                     <TableCell>
                       <div className="flex items-center space-x-3">
-                        <Avatar className="h-10 w-10">
+                        <Avatar className="h-8 w-8">
                           <AvatarImage src={user.photo} alt={user.nom} />
-                          <AvatarFallback className="bg-emerald-100 text-emerald-700 text-sm font-medium">
+                          <AvatarFallback className="bg-emerald-100 text-emerald-700 text-xs font-medium">
                             {getInitials(user.nom)}
                           </AvatarFallback>
                         </Avatar>
                         <div>
-                          <div className="font-medium text-gray-900">{user.nom}</div>
-                          <div className="text-xs text-gray-500">{user.derniereConnexion}</div>
+                          <div className="font-medium text-gray-900 text-sm">{user.nom}</div>
+                          <div className="text-xs text-gray-500 truncate">{user.derniereConnexion}</div>
                         </div>
                       </div>
                     </TableCell>
-                    <TableCell className="text-gray-900">{user.telephone}</TableCell>
-                    <TableCell className="text-gray-600">{user.email}</TableCell>
-                    <TableCell className="text-gray-600">{user.localisation}</TableCell>
+                    <TableCell className="text-gray-900 text-sm">{user.telephone}</TableCell>
+                    <TableCell className="text-gray-600 text-sm truncate">{user.email}</TableCell>
+                    <TableCell className="text-gray-600 text-sm">{user.localisation}</TableCell>
                     <TableCell>
                       <div className="flex flex-wrap gap-1">
                         {getTypesBadges(user.types)}
@@ -482,13 +483,13 @@ export default function UsersPage() {
                     </TableCell>
                     <TableCell>{getKYCBadge(user.statutKYC)}</TableCell>
                     <TableCell>{getAccountStatusBadge(user.statutCompte)}</TableCell>
-                    <TableCell className="text-gray-600">{user.dateInscription}</TableCell>
+                    <TableCell className="text-gray-600 text-sm">{user.dateInscription}</TableCell>
                     <TableCell>
-                      <div className="flex items-center space-x-2">
+                      <div className="flex items-center space-x-1">
                         <Dialog>
                           <DialogTrigger asChild>
-                            <Button variant="ghost" size="icon" className="h-8 w-8">
-                              <Eye className="h-4 w-4 text-gray-500" />
+                            <Button variant="ghost" size="icon" className="h-6 w-6">
+                              <Eye className="h-3 w-3 text-gray-500" />
                             </Button>
                           </DialogTrigger>
                           <DialogContent className="max-w-2xl">
@@ -573,8 +574,8 @@ export default function UsersPage() {
 
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="icon" className="h-8 w-8">
-                              <ChevronDown className="h-4 w-4 text-gray-500" />
+                            <Button variant="ghost" size="icon" className="h-6 w-6">
+                              <ChevronDown className="h-3 w-3 text-gray-500" />
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end">
@@ -602,6 +603,7 @@ export default function UsersPage() {
                 ))}
               </TableBody>
             </Table>
+            </div>
 
             {/* Pagination */}
             <div className="flex items-center justify-between px-6 py-4 border-t border-gray-100">
