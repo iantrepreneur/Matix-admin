@@ -246,8 +246,8 @@ const users: User[] = [
 export default function UsersPage() {
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedRegion, setSelectedRegion] = useState("");
-  const [selectedKYCStatus, setSelectedKYCStatus] = useState("");
+  const [selectedRegion, setSelectedRegion] = useState("all");
+  const [selectedKYCStatus, setSelectedKYCStatus] = useState("all");
   const [selectedAccountStatus, setSelectedAccountStatus] = useState("");
   const [activeTab, setActiveTab] = useState("tous");
 
